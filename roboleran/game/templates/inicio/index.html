@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogos de Robótica</title>
+  <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  <style>
+    /* Estilos para o formulário */
+    .modal {
+      display: none; /* Oculto por padrão */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Jogos de Robótica para Crianças</h1>
+    <nav>
+      <ul>
+        <li><a href="">Início</a></li>
+        <li><a href="jogos/">Jogos</a></li>
+        <li><a href="sobre/">Sobre</a></li>
+        <li><button id="addGameBtn">Adicionar Jogo</button></li>
+      </ul>
+    </nav>
+    <img src="{% static 'imagens/ilustracao-de-engrenagem-doodle-icone.png' %}" alt="Engrenagem" class="engrenagem-superior">
+  </header>
+
+  <section id="inicio">
+    <h2>Bem-vindo ao Mundo da Robótica!</h2>
+  </section>
+
+  <section id="jogos">
+    <h2>Escolha um Jogo</h2>
+    <div class="game-grid">
+      <!-- Jogo 1 -->
+      <div class="game-card">
+        <img src="assets/graident-ai-robot-vectorart-em-ingles.png" alt="Engrenagem" class="game-image">
+        <h3>Jogo da Memória</h3>
+      </div>
+      <!-- Jogo 2 -->
+      <div class="game-card">
+        <img src="assets/bonito-robo-usando-chapeu-voando-desenhos-animados-icone-ilustracao-vetorial-ciencia-tecnologia-icone-isolado.png" alt="Engrenagens Animadas" class="game-image">
+        <h3>Jogo de Robô 2</h3>
+      </div>
+      <!-- Jogo 3 -->
+      <div class="game-card">
+        <img src="assets/cute-robot-working-laptop-cartoon-vector-icon-illustration-science-technology-isolated-flat.png" alt="Robô com Laptop" class="game-image">
+        <h3>Jogo de Robô 3</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal para Adicionar Jogo -->
+  <div id="gameModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Adicionar Jogo</h2>
+      <form name="gameForm" method="post" enctype="multipart/form-data" id="addGameForm">
+        {% csrf_token %}
+        <label for="gameName">Nome do Jogo:</label>
+        <input type="text" id="Name" name="Name" required><br><br>
+        
+        <label for="gameDescription">Descrição:</label>
+        <textarea id="Description" name="Description" required></textarea><br><br>
+        
+        <label for="gameImage">Adicionar Imagem:</label>
+        <input type="file" id="Image" name="Image" accept="image/*" required><br><br>
+        
+        <label for="gamePackage">Adicionar Pacote do Jogo:</label>
+        <input type="file" id="Package" name="Package" required><br><br>
+        
+        <label for="gameAsset">Adicionar os assets:</label>
+        <input type="file" multiple id="Assets" name="Assets" required/><br><br>
+        
+        <input type="button" onclick="submitForm()" value="Adicionar Jogo">
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2024 Jogos de Robótica. Feito para crianças com diversão!</p>
+  </footer>
+
+  <script src="{% static 'js/script.js'%}"></script>
+</body>
+</html>
