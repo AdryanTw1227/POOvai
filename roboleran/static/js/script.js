@@ -28,11 +28,10 @@ assetInputFile.addEventListener("change", (e) => {
 
     const { target: { files } } = e
 
-    files.forEach(file => {
-      const obj = {
-        
-      }
-      formData.append('')
+    console.log(files)
+
+    Array.from(files).forEach(file => {
+      formData.append('asset[]', file)
     })
     console.log(files)
 
@@ -41,7 +40,8 @@ assetInputFile.addEventListener("change", (e) => {
       method: "POST",
       headers,
       mode: "cors",
-      cache: "default"
+      cache: "default",
+      body: formData
     }
 
 

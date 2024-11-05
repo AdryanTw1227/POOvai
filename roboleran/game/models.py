@@ -3,15 +3,14 @@ from django.db import models
 # Create your models here.
 
 class Asset(models.Model):
-    file = models.FileField(upload_to='assets/')
-    nome = models.TextField(max_length=100)
+    file = models.FileField(upload_to='assets2/')
 
     def __str__(self):
-        return self.file
+        return('')
     
     @classmethod
-    def adicionar_asset(cls, file, nome):
-        ass = cls(file=file, nome=nome)
+    def adicionar_asset(cls, file):
+        ass = cls(file=file)
         ass.save()
         return ass
     

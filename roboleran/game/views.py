@@ -28,9 +28,10 @@ def sobre(request):
 @csrf_exempt
 def asset(request): 
     if request.method == 'POST':
-        asset = request.FILES.get('Assets')
-        print(request.FILES)
-        Asset.adicionar_asset(file= asset)
+        assets = request.FILES.getlist('asset[]')
+
+        for asset in assets: 
+            Asset.adicionar_asset(file= asset)
 
         messages.success(request, 'Asset created Succesfully (_))ZZD !')
     return render(request, 'inicio/index.html')
