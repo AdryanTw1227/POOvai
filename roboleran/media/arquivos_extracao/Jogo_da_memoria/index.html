@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo da Memória - Robótica</title>
+  <style>
+    #game-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 150px));
+  grid-gap: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.card {
+  width: 100%;
+  aspect-ratio: 3/4; /* Proporção desejada (largura/altura) */
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2vmin; /* Tamanho da fonte responsivo */
+  cursor: pointer;
+  position: relative;
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transform-style: preserve-3d;
+}
+
+.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.back img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.front,
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transition: transform 0.3s;
+}
+
+.front {
+  background-color: #000;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.card.flipped .front {
+  transform: rotateY(180deg);
+}
+
+.card.flipped .back {
+  transform: rotateY(0deg);
+}
+  </style>
+</head>
+<body>
+  <h1>Jogo da Memória - Robótica</h1>
+  <div id="game-board"></div>
+  <script>
+    const cards = [
+  { name: 'pc', img: 'assets/pc.png' },
+  { name: 'mouse', img: 'assets/mouse.png' },
+  { name: 'pen', img: 'assets/pen.png' },
+  { name: 'impressora', img: 'assets/impressora.png' },
+  { name: 'servidor', img: 'assets/servidor.png' },
+  { name: 'sinal', img: 'assets/sinal.png' },
+  // Adicione mais cartas conforme necessário
+];
+
+const duplicatedCards = [...cards, ...cards];
+duplicatedCards.sort(() => Math.random() - 0.5);
+
+const gameBoard = document.getElementById('game-board');
+let firstCard = null;
+let secondCard = null;
+let matches = 0;
+
+function createCard(card) {
+  const cardElement = document.createElement('div');
+  cardElement.classList.add('card');
+  cardElement.dataset.name = card.name;
+
+  const frontFace = document.createElement('div');
+  frontFace.classList.add('front');
+
+  const backFace = document.createElement('div');
+  backFace.classList.add('back');
+  const img = document.createElement('img');
+  img.src = card.img;
+  backFace.appendChild(img);
+
+  cardElement.appendChild(frontFace);
+  cardElement.appendChild(backFace);
+
+  cardElement.addEventListener('click', handleCardClick);
+
+  return cardElement;
+}
+
+function handleCardClick(e) {
+  const card = e.currentTarget;
+  if (card.classList.contains('flipped') || secondCard) return;
+
+  card.classList.add('flipped');
+
+  setTimeout(() => {
+    if (!firstCard) {
+      firstCard = card;
+    } else {
+      secondCard = card;
+      checkMatch();
+    }
+  }, 300);
+}
+
+function checkMatch() {
+  if (firstCard.dataset.name === secondCard.dataset.name) {
+    firstCard.removeEventListener('click', handleCardClick);
+    secondCard.removeEventListener('click', handleCardClick);
+    matches++;
+    resetCards();
+  } else {
+    setTimeout(() => {
+      firstCard.classList.remove('flipped');
+      secondCard.classList.remove('flipped');
+      resetCards();
+    }, 500);
+  }
+
+  if (matches === cards.length) {
+    alert('Parabéns! Você completou o jogo!');
+  }
+}
+
+function resetCards() {
+  [firstCard, secondCard] = [null, null];
+}
+
+function startGame() {
+  duplicatedCards.forEach((card) => {
+    const cardElement = createCard(card);
+    gameBoard.appendChild(cardElement);
+  });
+}
+
+startGame();
+  </script>
+</body>
+</html>

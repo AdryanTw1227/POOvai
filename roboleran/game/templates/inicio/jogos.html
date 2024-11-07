@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Descrição dos Jogos</title>
   <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  <script src="script.js"></script>
 </head>
 </head>
 <body>
@@ -23,22 +24,27 @@
 
   <section id="jogos-descricao">
     <h2>Descrição dos Jogos</h2>
-    <div class="game-description">
-      <h3>Jogo 1: Jogo da Memória</h3>
-      <p><!-- Escreva aqui a descrição do primeiro jogo --></p>
-
-      <h3>Jogo 2: Jogo de Robô 2</h3>
-      <p><!-- Escreva aqui a descrição do segundo jogo --></p>
-
-      <h3>Jogo 3: Jogo de Robô 3</h3>
-      <p><!-- Escreva aqui a descrição do terceiro jogo --></p>
+    <div class="games">
+      {% for jogo in jogos %}
+        <div class="game">
+          <div class="title">{{ jogo.nome }}</div>
+          
+          <img class="cover" src="{{ jogo.imagem.url }}" alt="{{ jogo.nome }}">
+          
+          <div class="description">{{ jogo.descricao }}</div>
+          
+          <div class="files">
+            <div class="file">
+              <a href="{{ jogo.arquivo.url }}">Download</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
     </div>
   </section>
 
   <footer>
     <p>© 2024 Jogos de Robótica. Feito para crianças com diversão!</p>
   </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>

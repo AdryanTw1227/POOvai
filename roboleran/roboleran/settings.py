@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Application definition
 
@@ -77,11 +79,11 @@ WSGI_APPLICATION = 'roboleran.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bancoPOO2',
+        'NAME': 'teste',
         'USER': 'postgres',
-        'PASSWORD': 'ADMIN',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': '5433'
     }
 }
 

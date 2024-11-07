@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Jogo, Asset
+from .models import Jogo
 
 admin.site.register(Jogo)
-admin.site.register(Asset)
